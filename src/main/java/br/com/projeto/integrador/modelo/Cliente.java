@@ -8,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -22,15 +24,17 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@NotEmpty (message = "Nome é Obrigatório!")
 	private String nome;
 	private String email;
+	@NotNull (message = "Tipo Pessoa é Obrigatório!")
 	@Enumerated (EnumType.STRING)
 	private TipoPessoa tipoPessoa;
-
+	@NotEmpty(message = "Telefone é Obrigatório!")
 	private String telefone;
-	@CNPJ(groups = CnpjGroup.class)
+	@NotEmpty (message = "Documento é Obrigatório!")
 	@CPF(groups = CpfGroup.class)
+	@CNPJ(groups = CnpjGroup.class)
 	private String cpfCnpj;
 
 	public Long getId() {

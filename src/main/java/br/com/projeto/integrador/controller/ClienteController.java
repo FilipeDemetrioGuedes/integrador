@@ -22,12 +22,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.projeto.integrador.controller.dto.ClienteDto;
 import br.com.projeto.integrador.controller.exception.ClienteExistenteException;
 import br.com.projeto.integrador.controller.form.AtualizacaoClienteForm;
-import br.com.projeto.integrador.controller.form.ClienteForm;
 import br.com.projeto.integrador.modelo.Cliente;
 import br.com.projeto.integrador.repository.ClienteRepository;
 
 @RestController
 @RequestMapping("/clientes")
+
 public class ClienteController {
 
 	@Autowired
@@ -40,12 +40,12 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid ClienteForm clienteForm,
+	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid Cliente cliente,
 			UriComponentsBuilder uriBuilder)  {
+		
+		
 
-		Cliente cliente = clienteForm.converter(clienteRepository);
-
-		if (findByCPFCNPJ(clienteForm) != null) {
+		if (findByCPFCNPJ(cliente) != null) {
 
 			if (cliente.getTipoPessoa().isFisica()) {
 
@@ -100,10 +100,10 @@ public class ClienteController {
 
 	}
 
-	public Cliente findByCPFCNPJ(ClienteForm clienteForm) {
-		Cliente cliente = clienteRepository.findByCPFCNPJ(clienteForm.getCpfCnpj());
-		if (cliente != null) {
-			return cliente;
+	public Cliente findByCPFCNPJ(Cliente cliente) {
+		 Cliente cliente2 = clienteRepository.findByCPFCNPJ(cliente.getCpfCnpj());
+		if (cliente2 != null) {
+			return cliente2;
 		}
 		return null;
 	}

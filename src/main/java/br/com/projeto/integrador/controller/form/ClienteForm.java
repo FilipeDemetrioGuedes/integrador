@@ -3,12 +3,7 @@ package br.com.projeto.integrador.controller.form;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
-
 import br.com.projeto.integrador.modelo.Cliente;
-import br.com.projeto.integrador.modelo.CnpjGroup;
-import br.com.projeto.integrador.modelo.CpfGroup;
 import br.com.projeto.integrador.modelo.TipoPessoa;
 import br.com.projeto.integrador.repository.ClienteRepository;
 
@@ -19,7 +14,6 @@ public class ClienteForm {
 	@NotEmpty 
 	private String telefone;
 	@NotEmpty 
-
 	private String cpfCnpj;
 	@NotNull
 	private TipoPessoa tipoPessoa;
