@@ -1,7 +1,6 @@
 package br.com.projeto.integrador.controller.form;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import br.com.projeto.integrador.modelo.Cliente;
 import br.com.projeto.integrador.repository.ClienteRepository;
@@ -9,7 +8,7 @@ import br.com.projeto.integrador.repository.ClienteRepository;
 public class AtualizacaoClienteForm {
 
 	private String email;
-	@NotNull
+
 	@NotEmpty
 	private String telefone;
 

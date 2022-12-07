@@ -7,20 +7,22 @@ import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.projeto.integrador.modelo.Cliente;
+import br.com.projeto.integrador.modelo.CnpjGroup;
+import br.com.projeto.integrador.modelo.CpfGroup;
+import br.com.projeto.integrador.modelo.TipoPessoa;
 import br.com.projeto.integrador.repository.ClienteRepository;
 
 public class ClienteForm {
-	@NotNull @NotEmpty 
+	@NotEmpty 
 	private String nome;
 	private String email;
-	@NotNull @NotEmpty 
+	@NotEmpty 
 	private String telefone;
+	@NotEmpty 
 
-	@NotNull @NotEmpty @CPF
 	private String cpfCnpj;
-	
-	@NotNull @NotEmpty 
-	private String tipoPessoa;
+	@NotNull
+	private TipoPessoa tipoPessoa;
 	
 	public String getNome() {
 		return nome;
@@ -47,12 +49,13 @@ public class ClienteForm {
 		this.cpfCnpj = cpfCnpj;
 	}
 	
-	public String getTipoPessoa() {
+	public  TipoPessoa getTipoPessoa() {
 		return tipoPessoa;
 	}
-	public void setTipoPessoa(String tipoPessoa) {
+	public void setTipoPessoa( TipoPessoa tipoPessoa) {
 		this.tipoPessoa = tipoPessoa;
 	}
+
 	public Cliente converter(ClienteRepository clienteRepository) {
 		
 		return new Cliente(nome,email,telefone,cpfCnpj,tipoPessoa);

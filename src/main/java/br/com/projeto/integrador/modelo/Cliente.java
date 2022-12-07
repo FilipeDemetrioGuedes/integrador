@@ -1,12 +1,23 @@
 package br.com.projeto.integrador.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.group.GroupSequenceProvider;
+
 @Entity
-public class Cliente {
+@GroupSequenceProvider(ClienteGroupSequenceProvider.class)
+public class Cliente implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +25,12 @@ public class Cliente {
 
 	private String nome;
 	private String email;
-
-	private String tipoPessoa;
+	@Enumerated (EnumType.STRING)
+	private TipoPessoa tipoPessoa;
 
 	private String telefone;
-
+	@CNPJ(groups = CnpjGroup.class)
+	@CPF(groups = CpfGroup.class)
 	private String cpfCnpj;
 
 	public Long getId() {
@@ -64,15 +76,15 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public String getTipoPessoa() {
+	public TipoPessoa getTipoPessoa() {
 		return tipoPessoa;
 	}
 
-	public void setTipoPessoa(String tipoPessoa) {
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
 		this.tipoPessoa = tipoPessoa;
 	}
 
-	public Cliente(String nome, String email, String telefone, String cpfCnpj, String tipoPessoa) {
+	public Cliente(String nome, String email, String telefone, String cpfCnpj, TipoPessoa tipoPessoa) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;

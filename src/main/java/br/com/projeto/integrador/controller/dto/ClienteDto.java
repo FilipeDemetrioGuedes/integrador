@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.projeto.integrador.modelo.Cliente;
+import br.com.projeto.integrador.modelo.TipoPessoa;
 
 public class ClienteDto {
 
 	private Long id;
 	private String nome;
 	private String email;
-	private String tipoPessoa;
+	private TipoPessoa tipoPessoa;
 	private String telefone;
 	private String cpfCnpj;
 	
@@ -18,7 +19,7 @@ public class ClienteDto {
 		return email;
 	}
 
-	public String getTipoPessoa() {
+	public TipoPessoa getTipoPessoa() {
 		return tipoPessoa;
 	}
 

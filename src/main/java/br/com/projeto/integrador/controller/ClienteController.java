@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.projeto.integrador.controller.dto.ClienteDto;
+import br.com.projeto.integrador.controller.exception.ClienteExistenteException;
 import br.com.projeto.integrador.controller.form.AtualizacaoClienteForm;
 import br.com.projeto.integrador.controller.form.ClienteForm;
 import br.com.projeto.integrador.modelo.Cliente;
@@ -41,15 +41,24 @@ public class ClienteController {
 
 	@PostMapping
 	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid ClienteForm clienteForm,
-			UriComponentsBuilder uriBuilder) {
+			UriComponentsBuilder uriBuilder)  {
+
 		Cliente cliente = clienteForm.converter(clienteRepository);
-		if (findByCPFCNPJ(clienteForm) !=null) {
-			throw new DataIntegrityViolationException("CPJ ja Cadastrado!");
+
+		if (findByCPFCNPJ(clienteForm) != null) {
+
+			if (cliente.getTipoPessoa().isFisica()) {
+
+				throw new ClienteExistenteException("CPF Ja Cadastrado!", "CPF");
+			} else {
+
+				throw new ClienteExistenteException("CNPJ Ja Cadastrado!", "CNPJ");
+			}
+
 		}
-		
-		//if(!verificarDocumento(cliente)) throw new DataIntegrityViolationException("CPF/CNPJ informado nao é Valido!");
-		
-		clienteRepository.save(cliente);
+	
+			clienteRepository.save(cliente);
+	
 		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();
 		return ResponseEntity.created(uri).body(new ClienteDto(cliente));
 	}
@@ -90,24 +99,13 @@ public class ClienteController {
 		return ResponseEntity.notFound().build();
 
 	}
+
 	public Cliente findByCPFCNPJ(ClienteForm clienteForm) {
 		Cliente cliente = clienteRepository.findByCPFCNPJ(clienteForm.getCpfCnpj());
-		if(cliente !=null) {
+		if (cliente != null) {
 			return cliente;
 		}
 		return null;
 	}
-	
-	
-//	public boolean verificarDocumento(Cliente cliente) {
-//		GerarEValidarCpfCnpj gerador = new GerarEValidarCpfCnpj();
-//		if (cliente.getTipoPessoa() == TipoPessoa.FISICA) {
-//			return gerador.isCPF(cliente.getCpfCnpj());
-//		} else if (cliente.getTipoPessoa() == TipoPessoa.JURIDICA) {
-//			return gerador.isCNPJ(cliente.getCpfCnpj());
-//		} else {
-//			return false;
-//		}
-//	}
-	
+
 }

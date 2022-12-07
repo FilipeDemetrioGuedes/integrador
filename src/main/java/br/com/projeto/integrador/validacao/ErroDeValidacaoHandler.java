@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import br.com.projeto.integrador.controller.exception.ClienteExistenteException;
+
 @RestControllerAdvice
 public class ErroDeValidacaoHandler {
 	@Autowired
@@ -37,8 +39,8 @@ public class ErroDeValidacaoHandler {
 	}
 		@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 		@ExceptionHandler(DataIntegrityViolationException.class)
-		public 	ResponseEntity<ErroDeFormularioDto> objectNotFoundException(DataIntegrityViolationException e) {
-			ErroDeFormularioDto error = new ErroDeFormularioDto("CPF",e.getMessage());
+		public 	ResponseEntity<ErroDeFormularioDto> objectNotFoundException(ClienteExistenteException e) {
+			ErroDeFormularioDto error = new ErroDeFormularioDto(e.campo,e.getMessage());
 		
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		}
