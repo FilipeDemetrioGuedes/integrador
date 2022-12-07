@@ -38,7 +38,7 @@ public class ErroDeValidacaoHandler {
 		@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 		@ExceptionHandler(DataIntegrityViolationException.class)
 		public 	ResponseEntity<ErroDeFormularioDto> objectNotFoundException(DataIntegrityViolationException e) {
-			ErroDeFormularioDto error = new ErroDeFormularioDto(System.currentTimeMillis(),HttpStatus.BAD_REQUEST.value(),e.getMessage());
+			ErroDeFormularioDto error = new ErroDeFormularioDto("CPF",e.getMessage());
 		
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		}

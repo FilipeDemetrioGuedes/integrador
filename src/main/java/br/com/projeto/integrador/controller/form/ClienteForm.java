@@ -3,8 +3,10 @@ package br.com.projeto.integrador.controller.form;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
+
 import br.com.projeto.integrador.modelo.Cliente;
-import br.com.projeto.integrador.modelo.TipoPessoa;
 import br.com.projeto.integrador.repository.ClienteRepository;
 
 public class ClienteForm {
@@ -14,11 +16,11 @@ public class ClienteForm {
 	@NotNull @NotEmpty 
 	private String telefone;
 
-	@NotNull @NotEmpty 
+	@NotNull @NotEmpty @CPF
 	private String cpfCnpj;
 	
 	@NotNull @NotEmpty 
-	private TipoPessoa tipoPessoa;
+	private String tipoPessoa;
 	
 	public String getNome() {
 		return nome;
@@ -45,10 +47,10 @@ public class ClienteForm {
 		this.cpfCnpj = cpfCnpj;
 	}
 	
-	public TipoPessoa getTipoPessoa() {
+	public String getTipoPessoa() {
 		return tipoPessoa;
 	}
-	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+	public void setTipoPessoa(String tipoPessoa) {
 		this.tipoPessoa = tipoPessoa;
 	}
 	public Cliente converter(ClienteRepository clienteRepository) {

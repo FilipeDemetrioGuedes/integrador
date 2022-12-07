@@ -1,12 +1,9 @@
 package br.com.projeto.integrador.modelo;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Cliente {
@@ -14,15 +11,14 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank(message = "Nome é Obrigatório!")
+
 	private String nome;
 	private String email;
-	@NotBlank(message = "tipo pessoa é Obrigatório!")
-	@Enumerated(EnumType.STRING)
-	private TipoPessoa tipoPessoa;
-	@NotBlank(message = "Telefone é Obrigatório!")
+
+	private String tipoPessoa;
+
 	private String telefone;
-	@NotBlank(message = "CPF ou CNPJ é Obrigatório!")
+
 	private String cpfCnpj;
 
 	public Long getId() {
@@ -68,15 +64,15 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public TipoPessoa getTipoPessoa() {
+	public String getTipoPessoa() {
 		return tipoPessoa;
 	}
 
-	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+	public void setTipoPessoa(String tipoPessoa) {
 		this.tipoPessoa = tipoPessoa;
 	}
 
-	public Cliente(String nome, String email, String telefone, String cpfCnpj, TipoPessoa tipoPessoa) {
+	public Cliente(String nome, String email, String telefone, String cpfCnpj, String tipoPessoa) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;

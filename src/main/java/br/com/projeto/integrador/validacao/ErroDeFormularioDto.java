@@ -10,9 +10,7 @@ public class ErroDeFormularioDto {
 		this.erro = erro;
 	}
 
-	public ErroDeFormularioDto(long currentTimeMillis, int i, String message) {
-		this.erro = message;
-	}
+
 
 	public String getCampo() {
 		return campo;

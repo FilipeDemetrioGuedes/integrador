@@ -24,8 +24,6 @@ import br.com.projeto.integrador.controller.dto.ClienteDto;
 import br.com.projeto.integrador.controller.form.AtualizacaoClienteForm;
 import br.com.projeto.integrador.controller.form.ClienteForm;
 import br.com.projeto.integrador.modelo.Cliente;
-import br.com.projeto.integrador.modelo.GerarEValidarCpfCnpj;
-import br.com.projeto.integrador.modelo.TipoPessoa;
 import br.com.projeto.integrador.repository.ClienteRepository;
 
 @RestController
@@ -49,7 +47,7 @@ public class ClienteController {
 			throw new DataIntegrityViolationException("CPJ ja Cadastrado!");
 		}
 		
-		if(!verificarDocumento(cliente)) throw new DataIntegrityViolationException("CPF/CNPJ informado nao é Valido!");
+		//if(!verificarDocumento(cliente)) throw new DataIntegrityViolationException("CPF/CNPJ informado nao é Valido!");
 		
 		clienteRepository.save(cliente);
 		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();
@@ -101,15 +99,15 @@ public class ClienteController {
 	}
 	
 	
-	public boolean verificarDocumento(Cliente cliente) {
-		GerarEValidarCpfCnpj gerador = new GerarEValidarCpfCnpj();
-		if (cliente.getTipoPessoa() == TipoPessoa.FISICA) {
-			return gerador.isCPF(cliente.getCpfCnpj());
-		} else if (cliente.getTipoPessoa() == TipoPessoa.JURIDICA) {
-			return gerador.isCNPJ(cliente.getCpfCnpj());
-		} else {
-			return false;
-		}
-	}
+//	public boolean verificarDocumento(Cliente cliente) {
+//		GerarEValidarCpfCnpj gerador = new GerarEValidarCpfCnpj();
+//		if (cliente.getTipoPessoa() == TipoPessoa.FISICA) {
+//			return gerador.isCPF(cliente.getCpfCnpj());
+//		} else if (cliente.getTipoPessoa() == TipoPessoa.JURIDICA) {
+//			return gerador.isCNPJ(cliente.getCpfCnpj());
+//		} else {
+//			return false;
+//		}
+//	}
 	
 }
