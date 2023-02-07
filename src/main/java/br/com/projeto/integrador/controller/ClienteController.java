@@ -64,7 +64,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteDto> detalhar(@PathVariable Long id) {
+	public ResponseEntity<ClienteDto> detalhar(@PathVariable String id) {
 		Optional<Cliente> topico = clienteRepository.findById(id);
 		if (topico.isPresent()) {
 			return ResponseEntity.ok(new ClienteDto(topico.get()));
@@ -72,10 +72,47 @@ public class ClienteController {
 
 		return ResponseEntity.notFound().build();
 	}
+	@GetMapping("/pendentes")
+	public ResponseEntity<List<Cliente>> buscarPendente() {
+		List<Cliente> topico = clienteRepository.findByStatus();
+	
+			return ResponseEntity.ok(topico);
+		
+
+	}
+	
+	
+	@GetMapping("/excluir/{id}")
+	public ResponseEntity<String> excluirApp(@PathVariable String id) {
+		
+		try {
+			clienteRepository.deleteById(id);
+			return ResponseEntity.ok("Excluido");
+		} catch (Exception e) {
+			return ResponseEntity.ok("Falhou");
+		}
+			
+		
+
+	}
 
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<ClienteDto> atualizar(@PathVariable Long id,
+	public ResponseEntity<ClienteDto> atualizar(@PathVariable String id,
+			@RequestBody @Valid AtualizacaoClienteForm form) {
+		Optional<Cliente> optional = clienteRepository.findById(id);
+		if (optional.isPresent()) {
+			Cliente cliente = form.atualizar(id, clienteRepository);
+			return ResponseEntity.ok(new ClienteDto(cliente));
+		}
+
+		return ResponseEntity.notFound().build();
+
+	}
+	
+	@PostMapping("/{id}")
+	@Transactional
+	public ResponseEntity<ClienteDto> atualizarApp(@PathVariable String id,
 			@RequestBody @Valid AtualizacaoClienteForm form) {
 		Optional<Cliente> optional = clienteRepository.findById(id);
 		if (optional.isPresent()) {
@@ -87,9 +124,10 @@ public class ClienteController {
 
 	}
 
+
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<ClienteDto> remover(@PathVariable Long id) {
+	public ResponseEntity<ClienteDto> remover(@PathVariable String id) {
 		Optional<Cliente> optional = clienteRepository.findById(id);
 		if (optional.isPresent()) {
 			clienteRepository.deleteById(id);

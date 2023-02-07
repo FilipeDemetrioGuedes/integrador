@@ -8,13 +8,18 @@ import br.com.projeto.integrador.modelo.TipoPessoa;
 
 public class ClienteDto {
 
-	private Long id;
+	private String id;
 	private String nome;
 	private String email;
 	private TipoPessoa tipoPessoa;
 	private String telefone;
 	private String cpfCnpj;
+	private String status;
 	
+	public String getStatus() {
+		return status;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -32,7 +37,7 @@ public class ClienteDto {
 	}
 
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -47,6 +52,7 @@ public class ClienteDto {
 		this.telefone = cliente.getTelefone();
 		this.cpfCnpj = cliente.getCpfCnpj();
 		this.tipoPessoa = cliente.getTipoPessoa();
+		this.status = cliente.getStatus();
 	}
 
 	public static List<ClienteDto> converter(List<Cliente> clientes) {

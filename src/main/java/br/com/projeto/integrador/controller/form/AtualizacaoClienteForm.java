@@ -8,9 +8,18 @@ import br.com.projeto.integrador.repository.ClienteRepository;
 public class AtualizacaoClienteForm {
 
 	private String email;
-
+	@NotEmpty
+	private String status;
 	@NotEmpty
 	private String telefone;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public String getEmail() {
 		return email;
@@ -28,10 +37,11 @@ public class AtualizacaoClienteForm {
 		this.telefone = telefone;
 	}
 
-	public Cliente atualizar(Long id, ClienteRepository clienteRepository) {
+	public Cliente atualizar(String id, ClienteRepository clienteRepository) {
 		Cliente cliente = clienteRepository.getOne(id);
 		cliente.setEmail(this.email);
 		cliente.setTelefone(this.telefone);
+		cliente.setStatus(this.status);
 		return cliente;
 	}
 }
