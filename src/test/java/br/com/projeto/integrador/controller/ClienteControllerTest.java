@@ -19,13 +19,22 @@ public class ClienteControllerTest {
 	private MockMvc mockMvc;
 	
 	@Test
-	public void deveriaCadastrarUmClienteConformeOsCamposEsperados() throws Exception {
+	public void deveriaDarErroComStatusNulo() throws Exception {
 		URI uri = new URI("/clientes");
-		String json = "{\"nome\":\"ClienteTeste\", \"email\":\"emailteste@teste.com\",\"telefone\":\"99552324\",\"tipoPessoa\":\"FISICA\",\"cpfCnpj\":\"41861187017}\"";
+		String json = "{\"nome\":\"ClienteTeste\", \"email\":\"emailteste@teste.com\",\"telefone\":\"11199552324\",\"tipoPessoa\":\"FISICA\",\"cpfCnpj\":\"41861187017}\"";
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 				.content(json)
 				.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(MockMvcResultMatchers.status().is(400));
 	}
 
+	@Test
+	public void deveriaCadastrarClienteComSucesso() throws Exception {
+		URI uri = new URI("/clientes");
+		String json = "{\"nome\":\"ClienteTeste\", \"email\":\"emailteste@teste.com\",\"telefone\":\"11199552324\",\"tipoPessoa\":\"FISICA\",\"cpfCnpj\":\"41861187017\",\"status\":\"OK\"\"}";
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.status().is(200));
+	}
 }

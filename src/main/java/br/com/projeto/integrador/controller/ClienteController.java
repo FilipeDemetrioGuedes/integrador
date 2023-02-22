@@ -56,7 +56,6 @@ public class ClienteController {
 			}
 
 		}
-	
 			clienteRepository.save(cliente);
 	
 		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();
